@@ -1,0 +1,96 @@
+# -----------------------------
+# Python cache / compiled files
+# -----------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# -----------------------------
+# C extensions
+# -----------------------------
+*.so
+
+# -----------------------------
+# Distribution / packaging
+# -----------------------------
+.Python
+build/
+dist/
+eggs/
+*.egg-info/
+*.egg
+pip-wheel-metadata/
+
+# -----------------------------
+# Virtual environments
+# -----------------------------
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# -----------------------------
+# Installer logs
+# -----------------------------
+pip-log.txt
+pip-delete-this-directory.txt
+
+# -----------------------------
+# Unit test / coverage reports
+# -----------------------------
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+pytest_cache/
+
+# -----------------------------
+# Jupyter Notebook checkpoints
+# -----------------------------
+.ipynb_checkpoints
+
+# -----------------------------
+# IDE / Editor settings
+# -----------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# -----------------------------
+# OS files
+# -----------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# SentinelML runtime artifacts
+# -----------------------------
+*.sentinel
+*.model
+*.log
+state_store/
+benchmark_results/
+
+# -----------------------------
+# Qodo / internal workflow cache
+# -----------------------------
+.qodo/cache/
+.qodo/tmp/
+
+# -----------------------------
+# PyPI credentials (NEVER COMMIT)
+# -----------------------------
+.pypirc
+
+# -----------------------------
+# Temporary files
+# -----------------------------
+*.tmp
+*.bak
+*.old

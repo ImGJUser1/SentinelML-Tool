@@ -1,0 +1,7 @@
+CLI interface (sentinel scan dataset.csv)
+
+Visualization module
+
+PyPI packaging + versioning
+
+A research-paper draft describing the method.
