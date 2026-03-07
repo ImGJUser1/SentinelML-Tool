@@ -1,4 +1,3 @@
-Below is the **complete `README.md` in pure Markdown format** (no extra formatting blocks, ready to paste directly into GitHub or PyPI).
 
 ---
 
