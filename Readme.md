@@ -1,3 +1,7 @@
+Below is the **complete `README.md` in pure Markdown format** (no extra formatting blocks, ready to paste directly into GitHub or PyPI).
+
+---
+
 # SentinelML
 
 🛡️ Runtime Trust Layer for Machine Learning Systems
@@ -8,34 +12,42 @@
 
 SentinelML is a lightweight runtime safety layer for machine learning systems that estimates **how much a model prediction should be trusted**.
 
-Traditional ML evaluation focuses on **offline accuracy metrics**, but real-world deployments face:
+Traditional ML evaluation focuses on **offline metrics like accuracy and F1 score**, but real-world deployments face unpredictable conditions such as:
 
-* Distribution drift
-* Novel inputs
-* Sensor noise
-* Environmental changes
+* distribution drift
+* unseen inputs
+* sensor noise
+* environmental changes
 
-SentinelML runs **alongside any model** and evaluates input reliability in real time.
+SentinelML runs **alongside any model** and evaluates whether the input lies within the model’s learned data regime.
+
+Instead of only answering:
+
+```
+What is the prediction?
+```
+
+SentinelML answers the critical question:
+
+```
+Should we trust this prediction?
+```
 
 ---
 
 # Why SentinelML?
 
-Most ML systems assume that:
+Most ML systems implicitly assume:
 
 ```
 training data distribution == real-world data distribution
 ```
 
-This assumption often fails in production systems.
+In production systems, this assumption frequently breaks.
 
-SentinelML helps detect:
+When it does, models can produce **confident but incorrect predictions**.
 
-• unfamiliar inputs
-• statistical distribution drift
-• structural outliers
-
-before the model produces unreliable predictions.
+SentinelML provides a **runtime reliability layer** that detects these situations **before unreliable predictions propagate into decision systems**.
 
 ---
 
@@ -43,9 +55,13 @@ before the model produces unreliable predictions.
 
 Install from PyPI:
 
-```
+```bash
 pip install sentinelml
 ```
+
+Project page:
+
+[https://pypi.org/project/sentinelml/](https://pypi.org/project/sentinelml/)
 
 ---
 
@@ -80,39 +96,48 @@ Example output:
 
 # Core Concept
 
-SentinelML estimates a **Trust Score** for every input sample.
+SentinelML acts as a **runtime trust layer** between the model and the decision system.
 
 ```
-Model Prediction
+      Model
         ↓
-   SentinelML
+   Prediction
         ↓
-Trust Score + Drift Detection
+    SentinelML
+        ↓
+ Trust Score + Drift Detection
 ```
 
-The trust score indicates whether the model is operating **within its learned data regime**.
+Applications can then decide to:
+
+* accept the prediction
+* request human review
+* trigger a fallback model
+* pause automated actions
 
 ---
 
 # Architecture
 
-SentinelML combines three complementary signals.
+SentinelML combines multiple complementary trust signals.
+
+---
 
 ## 1. Familiarity Estimation
 
-A KD-tree estimates the density of training data.
+SentinelML uses a **KD-tree nearest neighbor search** to estimate how similar an input is to the training dataset.
 
-Inputs far from known data reduce trust.
+Inputs far from known samples reduce trust.
 
 ```
-T_f(x) = e^(-d(x,X)/σ)
+T_f(x) = exp(-d(x,X)/σ)
 ```
 
 ---
 
 ## 2. Distribution Drift Detection
 
-A sliding window compares incoming samples to the reference dataset using the Kolmogorov–Smirnov test.
+Incoming samples are compared against the training dataset using the **Kolmogorov–Smirnov statistical test**.
 
 Drift is flagged when:
 
@@ -120,21 +145,25 @@ Drift is flagged when:
 D = min_i(p_i) < α
 ```
 
+This helps detect environmental or sensor changes.
+
 ---
 
 ## 3. Geometric Trust
 
-Mahalanobis distance measures whether the input lies within the covariance structure of the dataset.
+SentinelML measures structural consistency using **Mahalanobis distance**.
 
 ```
-T_g(x) = e^(-sqrt((x-μ)^T Σ⁻¹ (x-μ)))
+T_g(x) = exp(-sqrt((x-μ)^T Σ⁻¹ (x-μ)))
 ```
+
+This detects inputs outside the dataset’s covariance structure.
 
 ---
 
 # Unified Trust Score
 
-SentinelML combines signals into a final score:
+Signals are combined into a single trust score:
 
 ```
 T(x) = 0.6T_f(x) + 0.4T_g(x)
@@ -142,34 +171,49 @@ T(x) = 0.6T_f(x) + 0.4T_g(x)
 
 This balances:
 
-* local neighborhood similarity
+* local similarity to training samples
 * global dataset structure
 
 ---
 
-# Example Use Cases
+# Real-World Example
 
-SentinelML is useful anywhere ML models operate in dynamic environments.
+Imagine a factory monitoring system predicting machine health.
 
-### Industrial IoT
+Normal sensor reading:
 
-Detect sensor anomalies in manufacturing pipelines.
+```
+temperature = 72
+vibration = 0.02
+pressure = 1.1
+```
 
-### Healthcare AI
+Sudden sensor malfunction:
 
-Warn when patient data differs from training cohorts.
+```
+temperature = 900
+vibration = 0.02
+pressure = 1.1
+```
 
-### Autonomous Systems
+A machine learning model might still output:
 
-Detect novel environmental conditions.
+```
+machine_status = "healthy"
+```
 
-### Financial Systems
+SentinelML detects the anomaly and returns:
 
-Detect regime changes in market behavior.
+```
+trust = 0.05
+drift_detected = True
+```
 
-### Robotics
+The system can then trigger:
 
-Identify unfamiliar operating environments.
+* safety shutdown
+* sensor recalibration
+* human inspection
 
 ---
 
@@ -177,7 +221,9 @@ Identify unfamiliar operating environments.
 
 SentinelML includes a command-line interface.
 
-```
+Scan a dataset:
+
+```bash
 sentinel scan dataset.csv
 ```
 
@@ -195,7 +241,7 @@ Row 2: Trust=0.23 Drift=True
 
 # Visualization
 
-SentinelML includes visualization utilities.
+SentinelML includes visualization utilities for monitoring trust over time.
 
 ```python
 from sentinelml.viz import plot_trust
@@ -205,34 +251,140 @@ scores = [sentinel.assess(x)["trust"] for x in X]
 plot_trust(scores)
 ```
 
-This helps monitor model reliability over time.
+This helps diagnose:
+
+* drift events
+* reliability degradation
+* unstable model behavior
 
 ---
 
-# PyTorch Integration
+# Demo Notebook
 
-SentinelML can wrap deep learning models.
+A full interactive notebook is included:
 
-```python
-from sentinelml.adapters.torch_adapter import TorchAdapter
+```
+notebooks/sentinelml_demo.ipynb
 ```
 
-This allows runtime trust evaluation for neural networks.
+The notebook demonstrates:
+
+1. training SentinelML
+2. detecting anomalous inputs
+3. visualizing trust scores
+4. simulating distribution drift
+
+Example snippet:
+
+```python
+from sentinelml import Sentinel
+from sklearn.datasets import load_breast_cancer
+
+X, y = load_breast_cancer(return_X_y=True)
+
+sentinel = Sentinel()
+sentinel.fit(X)
+
+scores = [sentinel.assess(x)["trust"] for x in X]
+
+print(scores[:10])
+```
+
+---
+
+# Visual Trust Dashboard
+
+SentinelML includes a simple monitoring dashboard built with Streamlit.
+
+Run the dashboard:
+
+```bash
+streamlit run dashboard/app.py
+```
+
+Example dashboard features:
+
+* real-time trust score
+* drift alerts
+* trust score history
+* anomaly detection indicators
+
+Example dashboard code:
+
+```python
+import streamlit as st
+from sentinelml import Sentinel
+import numpy as np
+
+st.title("SentinelML Trust Dashboard")
+
+X = np.random.normal(size=(1000,5))
+
+sentinel = Sentinel()
+sentinel.fit(X)
+
+sample = np.random.normal(size=5)
+
+result = sentinel.assess(sample)
+
+st.metric("Trust Score", result["trust"])
+st.write(result)
+```
 
 ---
 
 # Benchmarks
 
-Initial experiments comparing anomaly detection methods.
+SentinelML includes benchmark tools for evaluating anomaly detection performance.
 
-Dataset: Breast Cancer (sklearn)
+Benchmark script:
 
-| Method               | Error Detection AUC |
-| -------------------- | ------------------- |
-| SentinelML           | 0.91                |
-| Entropy              | 0.72                |
-| Isolation Forest     | 0.67                |
-| Local Outlier Factor | 0.64                |
+```
+benchmarks/compare_methods.py
+```
+
+Example benchmark dataset: Breast Cancer (sklearn)
+
+| Method               | Detection AUC |
+| -------------------- | ------------- |
+| SentinelML           | 0.91          |
+| Entropy              | 0.72          |
+| Isolation Forest     | 0.67          |
+| Local Outlier Factor | 0.64          |
+
+Example benchmark code:
+
+```python
+from sentinelml import Sentinel
+from sklearn.datasets import load_breast_cancer
+from sklearn.ensemble import IsolationForest
+
+X, y = load_breast_cancer(return_X_y=True)
+
+sentinel = Sentinel()
+sentinel.fit(X)
+
+trust_scores = [sentinel.assess(x)["trust"] for x in X]
+
+iso = IsolationForest().fit(X)
+iso_scores = -iso.decision_function(X)
+
+print("SentinelML scores computed")
+```
+
+---
+
+# PyTorch Integration
+
+SentinelML supports deep learning models through adapter modules.
+
+Example:
+
+```python
+from sentinelml.adapters.torch_adapter import TorchAdapter
+```
+
+This allows runtime trust evaluation for neural network models.
 
 ---
 
@@ -241,11 +393,11 @@ Dataset: Breast Cancer (sklearn)
 ```
 sentinelml/
 ├── core.py
-├── drift.py
-├── familiarity.py
 ├── trust.py
-├── plugins.py
+├── familiarity.py
+├── drift.py
 ├── incremental.py
+├── plugins.py
 ├── state.py
 ├── utils.py
 ├── cli.py
@@ -262,31 +414,18 @@ sentinelml/
 
 ### Version 0.2
 
-• Feature-level trust attribution
-• Time-series drift detection
+* feature-level trust attribution
+* improved drift detection
 
 ### Version 0.3
 
-• Deep learning uncertainty integration
-• GPU acceleration
+* deep learning uncertainty integration
+* GPU acceleration
 
 ### Version 1.0
 
-• Production monitoring APIs
-• distributed ML monitoring
-
----
-
-# Research Background
-
-SentinelML is inspired by work in:
-
-* out-of-distribution detection
-* statistical process monitoring
-* anomaly detection
-* uncertainty estimation
-
-The goal is to provide a **lightweight runtime reliability layer** for machine learning systems.
+* production monitoring APIs
+* distributed ML monitoring
 
 ---
 
@@ -302,21 +441,28 @@ Steps:
 
 Development setup:
 
-```
+```bash
 pip install -r requirements-dev.txt
 ```
 
 Run tests:
 
-```
+```bash
 pytest
 ```
 
 ---
 
-# License
+# Research Background
 
-MIT License
+SentinelML is inspired by research in:
+
+* out-of-distribution detection
+* statistical process monitoring
+* anomaly detection
+* uncertainty estimation
+
+The goal is to provide a **lightweight runtime reliability layer for machine learning systems**.
 
 ---
 
@@ -334,7 +480,18 @@ If you use SentinelML in research:
 
 ---
 
+# License
+
+MIT License
+
+---
+
 # Links
 
-PyPI: https://pypi.org/project/sentinelml/
-GitHub: https://github.com/ImGJUser1/SentinelML-Tool
+PyPI
+[https://pypi.org/project/sentinelml/](https://pypi.org/project/sentinelml/)
+
+GitHub
+[https://github.com/ImGJUser1/SentinelML-Tool](https://github.com/ImGJUser1/SentinelML-Tool)
+
+---
