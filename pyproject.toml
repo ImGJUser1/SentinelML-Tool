@@ -4,9 +4,34 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sentinelml"
-version = "0.1.0"
-description = "Runtime trust layer for machine learning systems"
-authors = [{name="Your Name"}]
+version = "0.1.1"
+description = "Runtime trust layer for machine learning systems that evaluates prediction reliability in real-world environments."
+readme = "README.md"
+requires-python = ">=3.8"
+
+authors = [
+    { name = "Swaroop Gj" }
+]
+
+license = { text = "MIT" }
+
+keywords = [
+    "machine-learning",
+    "mlops",
+    "drift-detection",
+    "anomaly-detection",
+    "ai-safety",
+    "model-monitoring"
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries",
+    "Intended Audience :: Developers",
+]
+
 dependencies = [
     "numpy",
     "scipy",
@@ -15,5 +40,19 @@ dependencies = [
     "matplotlib"
 ]
 
+[project.urls]
+Homepage = "https://github.com/ImGJUser1/SentinelML-Tool"
+Repository = "https://github.com/ImGJUser1/SentinelML-Tool"
+Issues = "https://github.com/ImGJUser1/SentinelML-Tool/issues"
+
 [project.scripts]
 sentinel = "sentinelml.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["sentinelml*"]
+exclude = [
+    "analysis*",
+    "notebooks*",
+    "tests*",
+]

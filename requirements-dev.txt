@@ -1,29 +1,52 @@
+# ===============================
 # Core runtime dependencies
-numpy
-scipy
-scikit-learn
-pandas
-matplotlib
+# ===============================
 
+numpy>=1.23
+scipy>=1.9
+scikit-learn>=1.2
+pandas>=1.5
+matplotlib>=3.6
+
+# ===============================
 # Optional ML frameworks
-torch
+# ===============================
 
-# Development tools
-pytest
-pytest-cov
-black
-isort
-flake8
-mypy
+torch>=2.0
 
+# ===============================
+# Testing
+# ===============================
+
+pytest>=7.3
+pytest-cov>=4.1
+
+# ===============================
+# Code quality
+# ===============================
+
+black>=23.0
+isort>=5.12
+flake8>=6.0
+mypy>=1.5
+
+# ===============================
 # Git hooks
-pre-commit
+# ===============================
 
+pre-commit>=3.3
+
+# ===============================
 # Packaging
-build
-twine
-setuptools
+# ===============================
 
+build>=0.10
+twine>=4.0
+setuptools>=65
+
+# ===============================
 # Documentation
-mkdocs
-mkdocs-material
+# ===============================
+
+mkdocs>=1.5
+mkdocs-material>=9.4
