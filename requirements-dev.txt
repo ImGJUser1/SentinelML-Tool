@@ -1,0 +1,29 @@
+# Core runtime dependencies
+numpy
+scipy
+scikit-learn
+pandas
+matplotlib
+
+# Optional ML frameworks
+torch
+
+# Development tools
+pytest
+pytest-cov
+black
+isort
+flake8
+mypy
+
+# Git hooks
+pre-commit
+
+# Packaging
+build
+twine
+setuptools
+
+# Documentation
+mkdocs
+mkdocs-material
