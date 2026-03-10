@@ -1,58 +1,90 @@
+# pyproject.toml
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "sentinelml"
-version = "0.1.1"
-description = "Runtime trust layer for machine learning systems that evaluates prediction reliability in real-world environments."
+version = "2.0.0"
+description = "Unified Reliability Engine for AI/ML Systems"
 readme = "README.md"
 requires-python = ">=3.8"
-
+license = {text = "MIT"}
 authors = [
-    { name = "Swaroop Gj" }
+    {name = "SentinelML Team", email = "team@sentinelml.ai"}
 ]
-
-license = { text = "MIT" }
-
 keywords = [
     "machine-learning",
     "mlops",
     "drift-detection",
     "anomaly-detection",
     "ai-safety",
-    "model-monitoring"
+    "model-monitoring",
+    "uncertainty-quantification",
+    "llm-guardrails",
+    "rag-evaluation"
 ]
-
 classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Topic :: Scientific/Engineering :: Artificial Intelligence",
-    "Topic :: Software Development :: Libraries",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
-]
-
-dependencies = [
-    "numpy",
-    "scipy",
-    "scikit-learn",
-    "pandas",
-    "matplotlib"
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 
 [project.urls]
-Homepage = "https://github.com/ImGJUser1/SentinelML-Tool"
-Repository = "https://github.com/ImGJUser1/SentinelML-Tool"
-Issues = "https://github.com/ImGJUser1/SentinelML-Tool/issues"
+Homepage = "https://github.com/sentinelml/sentinelml"
+Documentation = "https://sentinelml.readthedocs.io"
+Repository = "https://github.com/sentinelml/sentinelml.git"
+Issues = "https://github.com/sentinelml/sentinelml/issues"
 
 [project.scripts]
-sentinel = "sentinelml.cli:main"
+sentinelml = "sentinelml.cli:main"
+
+[project.optional-dependencies]
+torch = ["torch>=1.9.0", "torchvision>=0.10.0"]
+tensorflow = ["tensorflow>=2.6.0"]
+transformers = ["transformers>=4.20.0", "tokenizers>=0.12.0"]
+genai = ["openai>=0.27.0", "anthropic>=0.3.0"]
+rag = ["langchain>=0.0.200", "llama-index>=0.6.0"]
+streaming = ["kafka-python>=2.0.0"]
+serving = ["fastapi>=0.85.0", "uvicorn>=0.18.0", "grpcio>=1.48.0"]
+vectorstore = ["faiss-cpu>=1.7.0", "chromadb>=0.3.0"]
+dev = ["pytest>=7.0.0", "black>=22.0.0", "isort>=5.10.0", "flake8>=5.0.0", "mypy>=0.950"]
 
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["sentinelml*"]
-exclude = [
-    "analysis*",
-    "notebooks*",
-    "tests*",
+exclude = ["tests*", "examples*", "docs*", "benchmarks*"]
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 100
+multi_line_output = 3
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+addopts = "-v --tb=short --strict-markers"
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "requires_gpu: marks tests requiring GPU",
 ]
