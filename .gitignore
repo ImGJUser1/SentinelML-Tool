@@ -1,96 +1,88 @@
-# -----------------------------
-# Python cache / compiled files
-# -----------------------------
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
-
-# -----------------------------
-# C extensions
-# -----------------------------
 *.so
-
-# -----------------------------
-# Distribution / packaging
-# -----------------------------
 .Python
 build/
+develop-eggs/
 dist/
+downloads/
 eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
 *.egg-info/
+.installed.cfg
 *.egg
-pip-wheel-metadata/
+MANIFEST
 
-# -----------------------------
 # Virtual environments
-# -----------------------------
-.env
-.venv
-env/
 venv/
+env/
 ENV/
-env.bak/
-venv.bak/
+.venv/
 
-# -----------------------------
-# Installer logs
-# -----------------------------
-pip-log.txt
-pip-delete-this-directory.txt
-
-# -----------------------------
-# Unit test / coverage reports
-# -----------------------------
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-pytest_cache/
-
-# -----------------------------
-# Jupyter Notebook checkpoints
-# -----------------------------
-.ipynb_checkpoints
-
-# -----------------------------
-# IDE / Editor settings
-# -----------------------------
+# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-
-# -----------------------------
-# OS files
-# -----------------------------
+*~
 .DS_Store
-Thumbs.db
 
-# -----------------------------
-# SentinelML runtime artifacts
-# -----------------------------
-*.sentinel
-*.model
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+
+# Documentation
+docs/_build/
+docs/api/
+
+# Model files
+*.pkl
+*.joblib
+*.h5
+*.pt
+*.pth
+*.onnx
+
+# Data
+data/
+*.csv
+*.parquet
+*.json
+!tests/data/.gitkeep
+
+# Logs
+logs/
 *.log
-state_store/
-benchmark_results/
 
-# -----------------------------
-# Qodo / internal workflow cache
-# -----------------------------
-.qodo/cache/
-.qodo/tmp/
+# Environment
+.env
+.env.local
 
-# -----------------------------
-# PyPI credentials (NEVER COMMIT)
-# -----------------------------
-.pypirc
+# SentinelML specific
+sentinelml/tree.txt
+checkpoints/
+.vector_stores/
 
-# -----------------------------
-# Temporary files
-# -----------------------------
-*.tmp
-*.bak
-*.old
+# Qodo
+.qodo/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json

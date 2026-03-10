@@ -1,7 +1,201 @@
-CLI interface (sentinel scan dataset.csv)
-
-Visualization module
-
-PyPI packaging + versioning
-
-A research-paper draft describing the method.
+├── .github
+    ├── workflows
+        ├── ci.yml
+├── .pytest_cache
+    ├── v
+        ├── cache
+            ├── nodeids
+    ├── .gitignore
+    ├── CACHEDIR.TAG
+    ├── README.md
+├── .qodo
+    ├── agents
+    ├── workflows
+├── analysis
+    ├── calibration.py
+├── benchmarks
+    ├── comparison.py
+├── dist
+    ├── sentinelml-0.1.0-py3-none-any.whl
+    ├── sentinelml-0.1.0.tar.gz
+    ├── sentinelml-0.1.1-py3-none-any.whl
+    ├── sentinelml-0.1.1.tar.gz
+├── docs
+    ├── architecture.md
+├── examples
+    ├── sklearn_monitoring.py
+├── notebooks
+    ├── sentinel_demo.ipynb
+├── sentinelml
+    ├── adapters
+        ├── haystack_adapter.py
+        ├── huggingface_adapter.py
+        ├── langchain_adapter.py
+        ├── llama_index_adapter.py
+        ├── openai_adapter.py
+        ├── sklearn_adapter.py
+        ├── tensorflow_adapter.py
+        ├── torch_adapter.py
+        ├── __init__.py
+    ├── agents
+        ├── reasoning
+            ├── logic_checker.py
+            ├── step_consistency.py
+            ├── __init__.py
+        ├── state
+            ├── budget_manager.py
+            ├── checkpoint.py
+            ├── __init__.py
+        ├── trajectory
+            ├── loop_detector.py
+            ├── step_validator.py
+            ├── tool_monitor.py
+            ├── __init__.py
+        ├── __init__.py
+    ├── benchmarks
+        ├── evaluator.py
+    ├── core
+        ├── base.py
+        ├── ensemble.py
+        ├── pipeline.py
+        ├── report.py
+        ├── sentinel.py
+        ├── __init__.py
+    ├── deep_learning
+        ├── adversarial
+            ├── boundary_attack.py
+            ├── fgsm_detector.py
+            ├── __init__.py
+        ├── feature_drift
+            ├── activation_monitor.py
+            ├── embedding_drift.py
+            ├── __init__.py
+        ├── uncertainty
+            ├── base.py
+            ├── deep_ensembles.py
+            ├── evidential.py
+            ├── mc_dropout.py
+            ├── temperature_scaling.py
+            ├── __init__.py
+        ├── __init__.py
+    ├── genai
+        ├── alignment
+            ├── bias_detector.py
+            ├── toxicity_scorer.py
+            ├── __init__.py
+        ├── guardrails
+            ├── input
+                ├── injection_detector.py
+                ├── intent_classifier.py
+                ├── pii_detector.py
+                ├── toxicity_filter.py
+                ├── __init__.py
+            ├── output
+                ├── citation_verifier.py
+                ├── consistency_check.py
+                ├── hallucination_detector.py
+                ├── schema_validator.py
+                ├── __init__.py
+            ├── __init__.py
+        ├── uncertainty
+            ├── lexical_similarity.py
+            ├── semantic_entropy.py
+            ├── token_logprob.py
+            ├── __init__.py
+        ├── __init__.py
+    ├── infrastructure
+        ├── serving
+            ├── fastapi_server.py
+            ├── grpc_server.py
+            ├── __init__.py
+        ├── storage
+            ├── vector_store.py
+            ├── __init__.py
+        ├── streaming
+            ├── kafka_consumer.py
+            ├── __init__.py
+        ├── __init__.py
+    ├── rag
+        ├── advanced
+            ├── claim_verification.py
+            ├── contradiction_detect.py
+            ├── __init__.py
+        ├── end_to_end
+            ├── ares_evaluator.py
+            ├── latency_tracker.py
+            ├── ragas_metrics.py
+            ├── __init__.py
+        ├── generation
+            ├── answer_relevance.py
+            ├── citation_accuracy.py
+            ├── faithfulness.py
+            ├── __init__.py
+        ├── retrieval
+            ├── coverage_analyzer.py
+            ├── diversity_metrics.py
+            ├── relevance_scorer.py
+            ├── __init__.py
+        ├── __init__.py
+    ├── traditional
+        ├── drift
+            ├── adversarial.py
+            ├── base.py
+            ├── ks_univariate.py
+            ├── mmd_detector.py
+            ├── psi_detector.py
+            ├── __init__.py
+        ├── familiarity
+            ├── base.py
+            ├── hnsw.py
+            ├── kdtree.py
+            ├── kernel_density.py
+            ├── __init__.py
+        ├── trust
+            ├── base.py
+            ├── conformal.py
+            ├── isolation_forest.py
+            ├── mahalanobis.py
+            ├── vae_trust.py
+            ├── __init__.py
+        ├── __init__.py
+    ├── utils
+        ├── decorators.py
+        ├── logging.py
+        ├── types.py
+        ├── validation.py
+        ├── __init__.py
+    ├── cli.py
+    ├── core.py
+    ├── drift.py
+    ├── familiarity.py
+    ├── incremental.py
+    ├── plugins.py
+    ├── setup.py
+    ├── state.py
+    ├── tree.txt
+    ├── trust.py
+    ├── trust_manifold.py
+    ├── utils.py
+    ├── viz.py
+    ├── __init__.py
+    ├── __main__.py
+├── sentinelml.egg-info
+    ├── dependency_links.txt
+    ├── entry_points.txt
+    ├── PKG-INFO
+    ├── requires.txt
+    ├── SOURCES.txt
+    ├── top_level.txt
+├── tests
+    ├── __pycache__
+        ├── test_sentinel.cpython-311-pytest-8.4.2.pyc
+    ├── test_sentinel.py
+├── .gitignore
+├── .pre-commit-config.yaml
+├── .pypirc
+├── pyproject.toml
+├── Readme.md
+├── requirements-dev.txt
+├── requirements-lock.txt
+├── requirements.txt
+├── tree.txt
